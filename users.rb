@@ -4,15 +4,30 @@ require_relative 'questions'
 class User
     attr_accessor :id, :fname, :lname
 
-    def self.all
-        data = QuestionsDatabase.instance.execute("SELECT * FROM users")
-        data.map{|datum| User.new(datum)}
+    def self.find_by_id(id)
+        user = QuestionsDatabase.instance.execute(<<-SQL, id)
+        SELECT
+            *
+        FROM
+            users
+        WHERE
+            id = ?
+        SQL
+        return nil if user.length > 1
+        User.new(user[0])
     end
 
-    def self.find_by_id
-        data = QuestionsDatabase.instance.execute("SELECT id FROM replies")
-        data.map{|datum| User.new(datum)}
-
+    def self.find_by_name(fname, lname)
+        user = QuestionsDatabase.instance.execute(<<-SQL, fname, lname)
+        SELECT
+            *
+        FROM
+            users
+        WHERE
+            fname = ? AND lname = ?
+        SQL
+        return nil if user.length > 1
+        User.new(user.first)
     end
 
     def initialize(options)
@@ -21,7 +36,14 @@ class User
         @lname = options['lname']
     end
 
-    def authored_questions
-        QuestionsDatabase.instance.execute("SELECT * FROM questions JOIN users ON questions.id = users.id")
+    def authored_questions(id)
+        user = QuestionsDatabase.instance.execute(<<-SQL, id )
+        
+
+
+
+        SQL
+
+
     end
 end
