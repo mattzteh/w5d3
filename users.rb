@@ -37,13 +37,16 @@ class User
     end
 
     def authored_questions(id)
-        user = QuestionsDatabase.instance.execute(<<-SQL, id )
-        
+        # user = QuestionsDatabase.instance.execute(<<-SQL, id )
+        # SELECT
+        #     *
+        # FROM
+        #     questions
+        # WHERE
+        #     author_id = ?
 
+        # SQL
 
-
-        SQL
-
-
+        # User.new(user)
     end
 end
